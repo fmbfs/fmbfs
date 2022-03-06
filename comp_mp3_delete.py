@@ -1,9 +1,12 @@
 import os
 from compare_mp3 import compare
 from tkinter import Tk
-from tkinter import filedialog as fd
+#from tkinter import filedialog as fd
 from tkinter.filedialog import askdirectory
 
+#para contar o tempo de execussao
+import time
+start = time.time()
 
 #FUNCTIONS
 def lista_files():
@@ -34,33 +37,52 @@ lista_atual = lista_files()
 lista_reps = []
 
 print('\nQuantidade ficheiros: ', len(lista_atual))
+#para visualmente termos nocao de quantos ficheiros do total ja comparou
+count = 1
 
-
+t = len(lista_atual)
 #para correr o loop x vezes igual ao numero de ficheiros
-for filename in lista_atual: 
-        
-    a = directory + "/" + filename
-    #print(lista_atual.index(filename))
+for filename in lista_atual:
+    
+    print(f'{count} de {len(lista_atual)}')
 
-    #para saltar indices repetidos
-    for i in range(0, len(lista_atual)):
-        if i == lista_atual.index(filename):
-            break
+    #se o ficheiro a for mp3
+    if filename.endswith('.mp3'):    
+        a = directory + "/" + filename
+        #print(lista_atual.index(filename))
 
-        print("\nFicheiro A:", a)
-        b = directory + "/" + lista_atual[i]
-        print("Ficheiro B:", b)
-        print('\n')
+        #para saltar indices repetidos
+        for i in range(1, t):
+            if i == lista_atual.index(filename):
+                break
+            #se o ficheiro b for mp3
+            if lista_atual[i - t].endswith('.mp3'):
+                print("\nFicheiro A:", a)
+                #adiciona o path do ficheiro b
+                b = directory + "/" + lista_atual[i - t]
+                print("Ficheiro B:", b)
+                print('\n')
 
-        if str(compare(a, b)) == 'Result.SAME_FILE':
-            print('Ficheiros iguais, anexando B para remover...')
-            print('\n')
-            lista_reps.append(b)            
+                #executa a comparacao dos mp3
+                #se igual acrescenta a lista de repetidos
+                #senao volta ao inicio
+                if str(compare(a, b)) == 'Result.SAME_FILE':
+                    print('Ficheiros iguais, anexando B para remover...')
+                    print('\n')
+                    lista_reps.append(b)            
 
-        else:            
-            print('\nFicheiros diferentes, nada removido!\n')
-
+                else:            
+                    print('\nFicheiros diferentes, nada removido!\n')
+            else:
+                print('Ficheiro não é .MP3!\n')
+                continue
+    else:
+        print('Ficheiro não é .MP3!\n')
+        continue
+    count +=1
+    t -= 1
 #para remover duplicados na lista
+#dict.fromkeys ou set
 mylist = list(dict.fromkeys(lista_reps))
 print("LISTA reps:\n", mylist)
 
@@ -71,4 +93,5 @@ for repetidos in mylist:
 print('\nQuantidade ficheiros: ', len(lista_atual))
 print('\n')
 print("LISTA ATUAL:\n", lista_files())
-
+end = time.time()
+print("Tempo total decorrido: ", end - start)
