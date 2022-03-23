@@ -1,7 +1,6 @@
 - 👋 Hi, I’m @fmbfs
-- 👀 I’m interested in ... Eletronics, microcontrollers and C
-- 🌱 I’m currently learning ... C and Python in depth
-- 💞️ I’m looking to collaborate on ... C projects regarding microcontrollers and embedded systems
+- 👀 I’m interested in ... Eletronics, microcontrollers, C, Cpp
+- 🌱 I’m currently learning ... C, Cpp and Python
 - 📫 How to reach me ... franciscombfsantos@gmail.com
 
 <!---
